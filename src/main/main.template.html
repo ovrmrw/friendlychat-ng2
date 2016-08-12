@@ -1,35 +1,37 @@
-<!--<main class="mdl-layout__content mdl-color--grey-100">-->
 <div id="messages-card-container" class="mdl-cell mdl-cell--12-col mdl-grid">
 
   <!-- Messages container -->
   <div id="messages-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--6-col-tablet mdl-cell--6-col-desktop">
+
     <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+
       <div id="messages">
-        <span id="message-filler"></span>
-        <ng-container *ngFor="let message of messages">
-          <chat-message [name]="message.name" [text]="message.text"></chat-message>          
+        <ng-container *ngFor="let message of messages | async">
+          <chat-message [name]="message.name" [text]="message.text" [photoUrl]="message.photoUrl" [imageUrl]="message.imageUrl" (imageResolver)="imageResolved()"></chat-message>
         </ng-container>
-        
       </div>
+
       <form id="message-form" action="#">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input class="mdl-textfield__input" type="text" id="message" [(ngModel)]="message" name="message">
+          <input class="mdl-textfield__input" type="text" id="message" [(ngModel)]="text" name="text">
           <label class="mdl-textfield__label" for="message">Message...</label>
         </div>
-        <button id="submit" (click)="onSubmit()" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-              Send
-            </button>
+        <button id="submit" [disabled]="!text" (click)="onSubmit()" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+          Send
+        </button>
       </form>
+
       <form id="image-form" action="#">
-        <input id="mediaCapture" type="file" accept="image/*,capture=camera">
-        <button id="submitImage" title="Add an image" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
-              <i class="material-icons">image</i>
-            </button>
+        <input id="mediaCapture" #mediaCapture (change)="fileSelect($event)" type="file" accept="image/*,capture=camera">
+        <button id="submitImage" (click)="mediaCapture.click()" title="Add an image" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
+          <i class="material-icons">image</i>
+        </button>
       </form>
+
     </div>
+
   </div>
 
   <!--<chat-snackbar *ngIf="!isSignedIn"></chat-snackbar>-->
 
 </div>
-<!--</main>-->

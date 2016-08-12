@@ -10,7 +10,6 @@ import { ChatHeaderService } from './header.service';
 })
 export class ChatHeaderComponent implements OnChanges {
   @Input() isSignedIn: boolean;
-  title = 'Friendly Chat';
   profilePicUrl: string | null;
   userName: string | null;
 

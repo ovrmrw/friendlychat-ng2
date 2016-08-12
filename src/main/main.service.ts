@@ -8,8 +8,12 @@ export class ChatMainService {
     private fc: FirebaseController
   ) { }
 
-  send(message: string) {
-    this.fc.saveMessage(message);
+  send(text: string) {
+    this.fc.saveMessage(text);
+  }
+
+  saveImage(evnet) {
+    this.fc.saveImageMessage(event);
   }
 
   loadMessages() {
@@ -17,6 +21,5 @@ export class ChatMainService {
   }
 
   get messages$() { return this.fc.messages$; }
-
-  // get currentUser$() { return this.fc.currentUser$; }
+  get stableInform$() { return this.fc.stableInform$; }
 }

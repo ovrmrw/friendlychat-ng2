@@ -1,10 +1,16 @@
-# ovrmrw-ng2-env-20160725
+# friendlychat-ng2
 
 ---
 
-[Angular2の開発環境、俺ならこうやる 2016年7月25日版(rc.5)](http://qiita.com/ovrmrw/items/56364a4b673c03e20bba)
+This is a re-write of Firebase tutorial app called "Friendly Chat" into Angular2 style.
 
-[Demo on firebase hosting](https://my-ng2-env-20160725.firebaseapp.com)
+[Original Firebase Tutorial](https://codelabs.developers.google.com/codelabs/firebase-web)
+
+[Demo on firebase hosting (original ver.)](https://friendlychat-d014b.firebaseapp.com)
+
+[Demo on firebase hosting (Angular2 ver.)](https://friendlychat-ng2.firebaseapp.com)
+
+Base Project -> [ovrmrw/ovrmrw-ng2-env-20160725](https://github.com/ovrmrw/ovrmrw-ng2-env-20160725)
 
 ||My Environments|
 |:--|:--|
@@ -26,28 +32,4 @@ $ npm start
 ### Check whether your TypeScript codes are correct
 ```
 $ npm run tscheck
-```
-
-### Unit Test
-```
-$ npm run karma
-or
-$ npm run karma:w
-```
-
-### Rxjs5 Marble Test
-```
-$ npm run testrxjs
-or
-$ npm run testrxjs:w
-```
-
-### Unit Test & Rxjs5 Marble Test at the same time
-```
-$ npm test
-```
-
-### Deploy to firebase hosting
-```
-$ npm run deploy
 ```

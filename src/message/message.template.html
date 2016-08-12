@@ -1,7 +1,8 @@
-<div class="message-container visible">
+<div @fadeIn class="message-container visible">
   <div class="spacing">
-    <div class="pic"></div>
+    <div class="pic" [ngStyle]="{'background-image': 'url(' + photoUrl + ')'}"></div>
   </div>
-  <div class="message">{{text}}</div>
+  <div *ngIf="text" class="message">{{text}}</div>
+  <div *ngIf="imageUrl" class="message"><img (load)="onLoad()" src="{{imgSrc | async}}"></div>
   <div class="name">{{name}}</div>
 </div>

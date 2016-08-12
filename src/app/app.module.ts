@@ -12,6 +12,7 @@ import { ChatSnackbarComponent } from '../snackbar/snackbar.component';
 import { AppService } from './app.service';
 import { ChatHeaderService } from '../header/header.service';
 import { ChatMainService } from '../main/main.service';
+import { ChatMessageService } from '../message/message.service';
 
 import { FirebaseController } from '../firebase/firebase.controller';
 
@@ -19,7 +20,7 @@ import { FirebaseController } from '../firebase/firebase.controller';
 @NgModule({
   imports: [BrowserModule, FormsModule],
   declarations: [ChatMessageComponent, ChatSnackbarComponent, ChatMainComponent, ChatHeaderComponent, AppComponent],
-  providers: [FirebaseController, AppService, ChatHeaderService, ChatMainService],
+  providers: [FirebaseController, AppService, ChatHeaderService, ChatMainService, ChatMessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
