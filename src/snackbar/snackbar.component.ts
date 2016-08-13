@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, ElementRef, Input } from '@angular/core';
-import { Observable, Subject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 
 
 @Component({
@@ -29,9 +29,4 @@ export class ChatSnackbarComponent implements OnInit {
     });
   }
 
-}
-
-
-export interface SnackbarState {
-  message?: string;
 }
