@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, ElementRef } from '@angular/core';
-import { Subject } from 'rxjs/Rx';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, ElementRef, Input } from '@angular/core';
+import { Observable, Subject } from 'rxjs/Rx';
 
 
 @Component({
@@ -8,7 +8,7 @@ import { Subject } from 'rxjs/Rx';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatSnackbarComponent implements OnInit {
-  informSubject$ = new Subject<SnackbarState>();
+  @Input() snackbarText: Observable<string>;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -16,10 +16,10 @@ export class ChatSnackbarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.informSubject$.forEach(state => {
-      if (state && state.message) {
+    this.snackbarText.forEach(text => {
+      if (text) {
         const data = {
-          message: state.message,
+          message: text,
           timeout: 2000
         };
         const element = (<HTMLElement>this.el.nativeElement).querySelector('#must-signin-snackbar') as any;

@@ -2,7 +2,6 @@ import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnChange
 import { Observable, Subject } from 'rxjs/Rx';
 
 import { ChatMainService } from './main.service';
-import { ChatSnackbarComponent, SnackbarState } from '../snackbar/snackbar.component';
 
 
 @Component({
@@ -11,9 +10,9 @@ import { ChatSnackbarComponent, SnackbarState } from '../snackbar/snackbar.compo
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatMainComponent implements OnInit, OnChanges {
-  @ViewChild(ChatSnackbarComponent) snackbarComponent: ChatSnackbarComponent;
   @Input() isAuthed: boolean;
   text: string;
+  snackbarText$ = new Subject<string>();
 
   constructor(
     private service: ChatMainService,
@@ -41,10 +40,7 @@ export class ChatMainComponent implements OnInit, OnChanges {
     if (this.isAuthed) { // サインインしている。
       this.service.send(this.text);
     } else { // サインインしていない。
-      const snackbarState: SnackbarState = {
-        message: 'You must sign-in first'
-      };
-      this.snackbarComponent.informSubject$.next(snackbarState);
+      this.snackbarText$.next('You must sign-in first');
     }
   }
 
