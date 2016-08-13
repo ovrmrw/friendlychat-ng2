@@ -4,6 +4,7 @@ import { FirebaseController } from '../firebase/firebase.controller';
 
 @Injectable()
 export class ChatHeaderService {
+
   constructor(
     private fc: FirebaseController
   ) { }
@@ -17,4 +18,5 @@ export class ChatHeaderService {
   }
 
   get currentUser$() { return this.fc.currentUser$; }
+  
 }

@@ -4,6 +4,7 @@ import { FirebaseController } from '../firebase/firebase.controller';
 
 @Injectable()
 export class ChatMainService {
+
   constructor(
     private fc: FirebaseController
   ) { }
@@ -12,8 +13,8 @@ export class ChatMainService {
     this.fc.saveMessage(text);
   }
 
-  saveImage(evnet) {
-    this.fc.saveImageMessage(event);
+  saveImage(file: File) {
+    this.fc.saveImageMessage(file);
   }
 
   loadMessages() {
@@ -21,5 +22,6 @@ export class ChatMainService {
   }
 
   get messages$() { return this.fc.messages$; }
-  get stableInform$() { return this.fc.stableInform$; }
+  get informStable$() { return this.fc.informStable$; }
+
 }

@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { Subscription } from 'rxjs/Rx';
 
 import { AppService } from './app.service';
+
 
 @Component({
   selector: 'my-app',
@@ -9,10 +9,7 @@ import { AppService } from './app.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  isSignedIn: boolean = false;
-  private _disSubs: Subscription[] = [];
-  set disSub(sub: Subscription) { this._disSubs.push(sub); }
-  get disSubs() { return this._disSubs; }
+  isAuthed: boolean = false;
 
   constructor(
     private service: AppService,
@@ -20,20 +17,14 @@ export class AppComponent {
   ) { }
 
   ngOnInit() {
-    this.disSub = this.service.currentUser$.subscribe(user => {
+    this.service.currentUser$.forEach(user => {
       if (user) {
-        this.isSignedIn = true;
+        this.isAuthed = true;
       } else {
-        this.isSignedIn = false;
+        this.isAuthed = false;
       }
       this.cd.markForCheck();
     });
-  }
-
-  ngOnDestroy() {
-    if (this.disSubs.length) {
-      this.disSubs.forEach(sub => sub.unsubscribe());
-    }
   }
 
 }

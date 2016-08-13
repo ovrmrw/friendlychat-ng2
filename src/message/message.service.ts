@@ -8,10 +8,10 @@ export class ChatMessageService {
     private fc: FirebaseController
   ) { }
 
-  resolveImgSrc(imageUrl: string) {
+  resolveImageSrc(imageUrl: string) {
     return this.fc.setImageUrl(imageUrl);
   }
 
   get messages$() { return this.fc.messages$; }
-  get stableInform$() { return this.fc.stableInform$; }
+  get stableInform$() { return this.fc.informStable$; }
 }

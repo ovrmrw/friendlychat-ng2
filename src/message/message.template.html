@@ -3,6 +3,6 @@
     <div class="pic" [ngStyle]="{'background-image': 'url(' + photoUrl + ')'}"></div>
   </div>
   <div *ngIf="text" class="message">{{text}}</div>
-  <div *ngIf="imageUrl" class="message"><img (load)="onLoad()" src="{{imgSrc | async}}"></div>
+  <div *ngIf="imageUrl" class="message"><img (load)="onLoadImage()" src="{{imageSrc | async}}"></div>
   <div class="name">{{name}}</div>
 </div>

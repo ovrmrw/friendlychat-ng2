@@ -1,9 +1,11 @@
 <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
   <header class="mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
-    <chat-header [isSignedIn]="isSignedIn"></chat-header>
+    <chat-header [isAuthed]="isAuthed"></chat-header>
   </header>
 
   <main class="mdl-layout__content mdl-color--grey-100">
-    <chat-main [isSignedIn]="isSignedIn"></chat-main>
+    <chat-main [isAuthed]="isAuthed"></chat-main>
   </main>
+
 </div>

@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, Input } from '@angular/core';
-import { Observable, Subscription } from 'rxjs/Rx';
 
 import { ChatHeaderService } from './header.service';
+
 
 @Component({
   selector: 'chat-header',
@@ -9,7 +9,7 @@ import { ChatHeaderService } from './header.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatHeaderComponent implements OnChanges {
-  @Input() isSignedIn: boolean;
+  @Input() isAuthed: boolean;
   profilePicUrl: string | null;
   userName: string | null;
 
@@ -21,26 +21,26 @@ export class ChatHeaderComponent implements OnChanges {
   ngOnChanges(change) {
     console.log('header - ngOnChanges');
     console.log(JSON.stringify(change));
-    if (this.isSignedIn) {
-      this.service.currentUser$.forEach(user => {
+    if (this.isAuthed) { // Sign-In
+      this.service.currentUser$.take(1).toPromise().then(user => {
         if (user) {
           this.profilePicUrl = user.photoURL;
           this.userName = user.displayName;
           this.cd.markForCheck();
         }
       });
-    } else {
+    } else { // Sign-Out
       this.profilePicUrl = null;
       this.userName = null;
       this.cd.markForCheck();
     }
   }
 
-  signIn() {
+  onClickSignIn() {
     this.service.signIn();
   }
 
-  signOut() {
+  onClickSignOut() {
     this.service.signOut();
   }
 

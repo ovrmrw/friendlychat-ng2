@@ -23,25 +23,23 @@ export class ChatMessageComponent implements OnChanges {
   @Input() text: string;
   @Input() photoUrl: string;
   @Input() imageUrl: string;
-  imgSrc: Promise<string>;
-  @Output() imageResolver = new EventEmitter();
+  imageSrc: Observable<string>;
+
+  @Output() loadImage = new EventEmitter();
 
   constructor(
     private service: ChatMessageService,
     private cd: ChangeDetectorRef
   ) { }
 
-  ngOnChanges(change) {
-    console.log(change);
-    if (this.imageUrl && this.imageUrl.startsWith('gs://')) {
-      this.imgSrc = Promise.resolve('https://www.google.com/images/spin-32.gif');
-      this.imgSrc = this.service.resolveImgSrc(this.imageUrl);
-    } else {
-      this.imgSrc = Promise.resolve(this.imageUrl);
+  ngOnChanges() {
+    if (this.imageUrl) {
+      this.imageSrc = this.service.resolveImageSrc(this.imageUrl);
     }
   }
 
-  onLoad() {
-    this.imageResolver.next(true);
+  onLoadImage() {
+    this.loadImage.next(true);
   }
+
 }

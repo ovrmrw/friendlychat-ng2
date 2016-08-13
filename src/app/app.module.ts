@@ -19,7 +19,7 @@ import { FirebaseController } from '../firebase/firebase.controller';
 
 @NgModule({
   imports: [BrowserModule, FormsModule],
-  declarations: [ChatMessageComponent, ChatMainComponent, ChatHeaderComponent, AppComponent],
+  declarations: [ChatMessageComponent, ChatSnackbarComponent, ChatMainComponent, ChatHeaderComponent, AppComponent],
   providers: [FirebaseController, ChatMessageService, ChatHeaderService, ChatMainService, AppService],
   bootstrap: [AppComponent],
   // schemas: [CUSTOM_ELEMENTS_SCHEMA]

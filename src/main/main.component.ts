@@ -1,7 +1,9 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnChanges, Input, ElementRef } from '@angular/core';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnChanges, Input, ElementRef, ViewChild } from '@angular/core';
+import { Observable, Subject } from 'rxjs/Rx';
 
 import { ChatMainService } from './main.service';
+import { ChatSnackbarComponent, SnackbarState } from '../snackbar/snackbar.component';
+
 
 @Component({
   selector: 'chat-main',
@@ -9,7 +11,8 @@ import { ChatMainService } from './main.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatMainComponent implements OnInit, OnChanges {
-  @Input() isSignedIn: boolean;
+  @ViewChild(ChatSnackbarComponent) snackbarComponent: ChatSnackbarComponent;
+  @Input() isAuthed: boolean;
   text: string;
 
   constructor(
@@ -19,33 +22,42 @@ export class ChatMainComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-    this.service.stableInform$.forEach(() => this.resetForm());
+    this.service.informStable$.forEach(() => {
+      this.resetForm();
+      this.resetScrollPosition();
+    });
   }
 
   ngOnChanges(change) {
     console.log('main - ngOnChanges');
     console.log(JSON.stringify(change));
-    if (this.isSignedIn) {
+    if (this.isAuthed) {
       this.service.loadMessages();
     }
   }
 
 
-  onSubmit() {
-    if (this.isSignedIn) {
+  onSubmitMessage() {
+    if (this.isAuthed) { // サインインしている。
       this.service.send(this.text);
+    } else { // サインインしていない。
+      const snackbarState: SnackbarState = {
+        message: 'You must sign-in first'
+      };
+      this.snackbarComponent.informSubject$.next(snackbarState);
     }
   }
 
-  fileSelect(event) {
-    console.log(event);
-    this.service.saveImage(event);
+  onSelectImageFile(event) {
+    if (event.target && event.target.files && event.target.files.length) {
+      const file = event.target.files[0] as File;
+      console.log(file);
+      this.service.saveImage(file);
+    }
   }
 
-  imageResolved() {
-    const listElement = (<HTMLElement>this.el.nativeElement).querySelector('#messages') as HTMLElement;
-    listElement.scrollTop = listElement.scrollHeight; // スクロール位置を更新する。
-    this.cd.markForCheck();
+  onLoadImage() {
+    this.resetScrollPosition();
   }
 
   resetForm() {
@@ -53,12 +65,16 @@ export class ChatMainComponent implements OnInit, OnChanges {
       this.text = ''; // Messageを空にする。
       const imageFormElement = (<HTMLElement>this.el.nativeElement).querySelector('#image-form') as HTMLFormElement;
       imageFormElement.reset();
-      const listElement = (<HTMLElement>this.el.nativeElement).querySelector('#messages') as HTMLElement;
-      listElement.scrollTop = listElement.scrollHeight; // スクロール位置を更新する。
       const inputElement = (<HTMLElement>this.el.nativeElement).querySelector('#message') as HTMLInputElement;
       inputElement.focus(); // フォーカスを移動する。
       this.cd.markForCheck();
     }, 0);
+  }
+
+  resetScrollPosition() {
+    const listElement = (<HTMLElement>this.el.nativeElement).querySelector('#messages') as HTMLElement;
+    listElement.scrollTop = listElement.scrollHeight; // スクロール位置を更新する。
+    this.cd.markForCheck();
   }
 
   get messages() { return this.service.messages$; }

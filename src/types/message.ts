@@ -3,4 +3,5 @@ export interface MessageType {
   text?: string;
   photoUrl?: string;
   imageUrl?: string;
+  key?: string;
 }

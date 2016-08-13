@@ -7,22 +7,22 @@
 
       <div id="messages">
         <ng-container *ngFor="let message of messages | async">
-          <chat-message [name]="message.name" [text]="message.text" [photoUrl]="message.photoUrl" [imageUrl]="message.imageUrl" (imageResolver)="imageResolved()"></chat-message>
+          <chat-message [name]="message.name" [text]="message.text" [photoUrl]="message.photoUrl" [imageUrl]="message.imageUrl" (loadImage)="onLoadImage()"></chat-message>
         </ng-container>
       </div>
 
-      <form id="message-form" action="#">
+      <form id="message-form" action="#" (ngSubmit)="onSubmitMessage()" #messageForm="ngForm">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
           <input class="mdl-textfield__input" type="text" id="message" [(ngModel)]="text" name="text">
           <label class="mdl-textfield__label" for="message">Message...</label>
         </div>
-        <button id="submit" [disabled]="!text" (click)="onSubmit()" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+        <button id="submit" [disabled]="!text" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
           Send
         </button>
       </form>
 
       <form id="image-form" action="#">
-        <input id="mediaCapture" #mediaCapture (change)="fileSelect($event)" type="file" accept="image/*,capture=camera">
+        <input id="mediaCapture" #mediaCapture (change)="onSelectImageFile($event)" type="file" accept="image/*,capture=camera">
         <button id="submitImage" (click)="mediaCapture.click()" title="Add an image" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
           <i class="material-icons">image</i>
         </button>
@@ -32,6 +32,6 @@
 
   </div>
 
-  <!--<chat-snackbar *ngIf="!isSignedIn"></chat-snackbar>-->
+  <chat-snackbar></chat-snackbar>
 
 </div>
