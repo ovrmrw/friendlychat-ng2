@@ -11,6 +11,9 @@
     "skipLibCheck": true,
     "outDir": ".dest-tsc"
   },
+  "include": [
+    "src*/**/*.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

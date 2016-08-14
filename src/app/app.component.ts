@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
 
 import { AppService } from './app.service';
 
@@ -8,7 +8,7 @@ import { AppService } from './app.service';
   templateUrl: 'app.template.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   isAuthed: boolean = false;
 
   constructor(

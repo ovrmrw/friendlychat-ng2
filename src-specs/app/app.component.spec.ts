@@ -9,30 +9,21 @@ import { asyncPower, setTimeoutPromise, elements, elementText, elementValue } fr
 ////////////////////////////////////////////////////////////////////////
 // modules
 import { AppComponent } from '../../src/app/app.component';
+import { AppService } from '../../src/app/app.service';
 
-import { Directive } from '@angular/core';
-// import { APP_BASE_HREF } from '@angular/common';
-// import { ActivatedRoute, Router, RouterLinkActive } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 
 
 ////////////////////////////////////////////////////////////////////////
 // mocks
-// class Mock { }
-// class MockRouter {
-//   createUrlTree() { }
-// }
+class MockService {
+  user = {};
+  get currentUser$() {
+    return Observable.of(this.user);
+  }
+}
 
-// @Directive({ selector: '[routerLinkActive]' })
-// class MockRouterLinkActiveDirective { }
-
-const mockTemplate = `
-  <h1>{{title}}</h1>
-  <nav>
-    <a>Dashboard</a>
-    <a>Heroes</a>
-  </nav>
-`;
+const mockTemplate = '';
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -42,13 +33,15 @@ describe('TEST: App Component', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [AppComponent],
-      providers: []
+      providers: [
+        { provide: AppService, useClass: MockService }
+      ]
     });
   });
   /* <<< boilerplate */
 
 
-  it('can create, should have title', asyncPower(async () => {
+  it('can create, should be authed.', asyncPower(async () => {
     await TestBed
       .overrideComponent(AppComponent, { set: { template: mockTemplate } })
       .compileComponents();
@@ -57,16 +50,13 @@ describe('TEST: App Component', () => {
 
     const el = fixture.debugElement.nativeElement as HTMLElement;
     const component = fixture.componentRef.instance;
-    assert(elementText(el, 'nav a', 0) === 'Dashboard');
-    assert(elementText(el, 'nav a', 1) === 'Heroes');
-    assert(component.title === 'Tour of Heroes');
-    assert(elementText(el, 'h1') === '');
-    fixture.detectChanges();
-    assert(elementText(el, 'h1') === 'Tour of Heroes');
+    assert(component.isAuthed === false);
+    component.ngOnInit();
+    assert(component.isAuthed === true);
   }));
 
 
-  it('can create, should have title (fakeAsync ver.)', fakeAsync(() => {
+  it('can create, should be authed. (fakeAsync ver.)', fakeAsync(() => {
     TestBed
       .overrideComponent(AppComponent, { set: { template: mockTemplate } })
       .compileComponents();
@@ -76,12 +66,9 @@ describe('TEST: App Component', () => {
 
     const el = fixture.debugElement.nativeElement as HTMLElement;
     const component = fixture.componentRef.instance;
-    assert(elementText(el, 'nav a', 0) === 'Dashboard');
-    assert(elementText(el, 'nav a', 1) === 'Heroes');
-    assert(component.title === 'Tour of Heroes');
-    assert(elementText(el, 'h1') === '');
-    fixture.detectChanges();
-    assert(elementText(el, 'h1') === 'Tour of Heroes');
+    assert(component.isAuthed === false);
+    component.ngOnInit();
+    assert(component.isAuthed === true);
   }));
 
 });

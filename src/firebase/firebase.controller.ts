@@ -5,10 +5,10 @@ import lodash from 'lodash';
 import { MessageType } from '../types';
 
 const config = {
-  apiKey: "AIzaSyDUGgHesSALxeaKYH_qyt-NxPndMgD6MVI",
-  authDomain: "friendlychat-d014b.firebaseapp.com",
-  databaseURL: "https://friendlychat-d014b.firebaseio.com",
-  storageBucket: "friendlychat-d014b.appspot.com",
+  apiKey: 'AIzaSyDUGgHesSALxeaKYH_qyt-NxPndMgD6MVI',
+  authDomain: 'friendlychat-d014b.firebaseapp.com',
+  databaseURL: 'https://friendlychat-d014b.firebaseio.com',
+  storageBucket: 'friendlychat-d014b.appspot.com',
 };
 
 const LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif';
@@ -92,7 +92,8 @@ export class FirebaseController {
         }).then((data) => {
           // Upload the image to Firebase Storage.
           const uploadTask = this.storage.ref(currentUser.uid + '/' + Date.now() + '/' + file.name)
-            .put(file, { 'contentType': file.type });
+            // .put(file, { 'contentType': file.type });
+            .put(file);
           // Listen for upload completion.
           uploadTask.on('state_changed', null, (error) => {
             console.error('There was an error uploading a file to Firebase Storage:', error);
