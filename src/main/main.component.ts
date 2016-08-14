@@ -21,16 +21,14 @@ export class ChatMainComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-    this.service.informStable$.forEach(() => {
+    this.service.informStable$.forEach(() => { // コンポーネント外(主にFirebaseController)で.next()された。
       this.resetForm();
       this.resetScrollPosition();
     });
   }
 
   ngOnChanges(change) {
-    console.log('main - ngOnChanges');
-    console.log(JSON.stringify(change));
-    if (this.isAuthed) {
+    if (this.isAuthed) { // サインインしている。
       this.service.loadMessages();
     }
   }
@@ -44,15 +42,19 @@ export class ChatMainComponent implements OnInit, OnChanges {
     }
   }
 
-  onSelectImageFile(event) {
+  onSelectImageFile(event) { // ファイルを選択した。
     if (event.target && event.target.files && event.target.files.length) {
       const file = event.target.files[0] as File;
       console.log(file);
-      this.service.saveImage(file);
+      if (file.type.match('image.*')) { // imageファイルを選択した。
+        this.service.saveImage(file);
+      } else { // imageファイルを選択していない。
+        this.snackbarText$.next('You can only share images');
+      }
     }
   }
 
-  onLoadImage() {
+  onLoadImage() { // imageファイルが表示された。
     this.resetScrollPosition();
   }
 
@@ -60,7 +62,7 @@ export class ChatMainComponent implements OnInit, OnChanges {
     setTimeout(() => {
       this.text = ''; // Messageを空にする。
       const imageFormElement = (<HTMLElement>this.el.nativeElement).querySelector('#image-form') as HTMLFormElement;
-      imageFormElement.reset();
+      imageFormElement.reset(); // ファイル選択をリセットする。
       const inputElement = (<HTMLElement>this.el.nativeElement).querySelector('#message') as HTMLInputElement;
       inputElement.focus(); // フォーカスを移動する。
       this.cd.markForCheck();

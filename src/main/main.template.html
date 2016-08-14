@@ -7,7 +7,7 @@
 
       <div id="messages">
         <ng-container *ngFor="let message of messages | async">
-          <chat-message [name]="message.name" [text]="message.text" [photoUrl]="message.photoUrl" [imageUrl]="message.imageUrl" (loadImage)="onLoadImage()"></chat-message>
+          <chat-message [name]="message.name" [text]="message.text" [photoUrl]="message.photoUrl" [imageUrl]="message.imageUrl" (loadImageEvent)="onLoadImage()"></chat-message>
         </ng-container>
       </div>
 

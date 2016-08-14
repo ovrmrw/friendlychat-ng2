@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Rx';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatSnackbarComponent implements OnInit {
-  @Input() snackbarText: Observable<string>;
+  @Input() snackbarText: Observable<string>; // ChatMainComponentから.next()で新しい値を送り込む。
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -23,7 +23,7 @@ export class ChatSnackbarComponent implements OnInit {
           timeout: 2000
         };
         const element = (<HTMLElement>this.el.nativeElement).querySelector('#must-signin-snackbar') as any;
-        element.MaterialSnackbar.showSnackbar(data);
+        element.MaterialSnackbar.showSnackbar(data); // SnackBarを表示する。
         this.cd.markForCheck();
       }
     });

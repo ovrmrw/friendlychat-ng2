@@ -82,16 +82,6 @@ export class FirebaseController {
 
   saveImageMessage(file: File) {
     if (file) {
-      // Check if the file is an image.
-      // if (!file.type.match('image.*')) {
-      //   var data = {
-      //     message: 'You can only share images',
-      //     timeout: 2000
-      //   };
-      //   this.signInSnackbar.MaterialSnackbar.showSnackbar(data);
-      //   return;
-      // }
-
       // We add a message with a loading icon that will get updated with the shared image.
       const currentUser = this.auth.currentUser;
       if (currentUser) {
@@ -119,9 +109,10 @@ export class FirebaseController {
 
   setImageUrl(imageUrl: string): Observable<string> {
     // If the image is a Firebase Storage URI we fetch the URL.
-    const subject = new BehaviorSubject<string>(LOADING_IMAGE_URL);
+    const subject = new BehaviorSubject<string>(imageUrl);
 
     if (imageUrl.startsWith('gs://')) {
+      subject.next(LOADING_IMAGE_URL);
       this.storage.refFromURL(imageUrl).getMetadata().then((metadata) => {
         subject.next(metadata.downloadURLs[0]);
       });

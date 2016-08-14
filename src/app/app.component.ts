@@ -18,9 +18,9 @@ export class AppComponent {
 
   ngOnInit() {
     this.service.currentUser$.forEach(user => {
-      if (user) {
+      if (user) { // Firebaseからサインインの状態を受け取った。
         this.isAuthed = true;
-      } else {
+      } else { // Firebaseからサインアウトの状態を受け取った。
         this.isAuthed = false;
       }
       this.cd.markForCheck();

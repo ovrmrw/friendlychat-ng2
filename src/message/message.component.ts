@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { ChatMessageService } from './message.service';
 
+
 @Component({
   selector: 'chat-message',
   templateUrl: 'message.template.html',
@@ -25,7 +26,7 @@ export class ChatMessageComponent implements OnChanges {
   @Input() imageUrl: string;
   imageSrc: Observable<string>;
 
-  @Output() loadImage = new EventEmitter();
+  @Output() loadImageEvent = new EventEmitter();
 
   constructor(
     private service: ChatMessageService,
@@ -34,12 +35,12 @@ export class ChatMessageComponent implements OnChanges {
 
   ngOnChanges() {
     if (this.imageUrl) {
-      this.imageSrc = this.service.resolveImageSrc(this.imageUrl);
+      this.imageSrc = this.service.resolveImageSrc(this.imageUrl); // 時間差でimageファイルのURLを差し替える。
     }
   }
 
   onLoadImage() {
-    this.loadImage.next(true);
+    this.loadImageEvent.next(true); // imageファイルがloadされたことを親コンポーネントに通知する。
   }
 
 }

@@ -19,28 +19,26 @@ export class ChatHeaderComponent implements OnChanges {
   ) { }
 
   ngOnChanges(change) {
-    console.log('header - ngOnChanges');
-    console.log(JSON.stringify(change));
-    if (this.isAuthed) { // Sign-In
+    if (this.isAuthed) { // サインインした。
       this.service.currentUser$.take(1).toPromise().then(user => {
-        if (user) {
+        if (user) { // ユーザー情報をFirebaseから取得した。
           this.profilePicUrl = user.photoURL;
           this.userName = user.displayName;
           this.cd.markForCheck();
         }
       });
-    } else { // Sign-Out
+    } else { // サインアウトした。
       this.profilePicUrl = null;
       this.userName = null;
       this.cd.markForCheck();
     }
   }
 
-  onClickSignIn() {
+  onClickSignIn() { // サインインボタンをクリックした。
     this.service.signIn();
   }
 
-  onClickSignOut() {
+  onClickSignOut() { // サインアウトボタンをクリックした。
     this.service.signOut();
   }
 
