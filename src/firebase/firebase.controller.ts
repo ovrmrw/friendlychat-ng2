@@ -36,6 +36,7 @@ export class FirebaseController {
     this.database = firebase.database();
     this.storage = firebase.storage();
 
+    // サインインかサインアウトをするとその都度この処理が走る。
     this.auth.onAuthStateChanged((user: firebase.User) => {
       if (user) { // User is signed in!
         this.authSubject$.next(user);
