@@ -1,5 +1,7 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, ElementRef, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, ElementRef, Input, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
+
+import { ParentComponent } from '../app/parent.component';
 
 
 @Component({
@@ -7,16 +9,18 @@ import { Observable } from 'rxjs/Rx';
   templateUrl: 'snackbar.template.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ChatSnackbarComponent implements OnInit {
+export class ChatSnackbarComponent extends ParentComponent implements OnInit, OnDestroy {
   @Input() snackbarText: Observable<string>; // ChatMainComponentから.next()で新しい値を送り込む。
 
   constructor(
     private cd: ChangeDetectorRef,
     private el: ElementRef
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit() {
-    this.snackbarText.forEach(text => {
+    this.disposable = this.snackbarText.subscribe(text => {
       if (text) {
         const data = {
           message: text,
@@ -27,6 +31,10 @@ export class ChatSnackbarComponent implements OnInit {
         this.cd.markForCheck();
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.disposeSubscriptions();
   }
 
 }

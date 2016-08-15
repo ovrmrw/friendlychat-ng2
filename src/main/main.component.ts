@@ -1,7 +1,8 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnChanges, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnChanges, Input, ElementRef, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
 
 import { ChatMainService } from './main.service';
+import { ParentComponent } from '../app/parent.component';
 
 
 @Component({
@@ -9,7 +10,7 @@ import { ChatMainService } from './main.service';
   templateUrl: 'main.template.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ChatMainComponent implements OnInit, OnChanges {
+export class ChatMainComponent extends ParentComponent implements OnInit, OnDestroy, OnChanges {
   @Input() isAuthed: boolean;
   text: string;
   snackbarText$ = new Subject<string>();
@@ -18,13 +19,19 @@ export class ChatMainComponent implements OnInit, OnChanges {
     private service: ChatMainService,
     private cd: ChangeDetectorRef,
     private el: ElementRef
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit() {
-    this.service.informStable$.forEach(() => { // コンポーネント外(主にFirebaseController)で.next()された。
+    this.disposable = this.service.informStable$.subscribe(() => { // コンポーネント外(主にFirebaseController)で.next()された。
       this.resetForm();
       this.resetScrollPosition();
     });
+  }
+
+  ngOnDestroy() {
+    this.disposeSubscriptions();
   }
 
   ngOnChanges(change) {

@@ -38,6 +38,7 @@ export class ChatMessageComponent implements OnChanges {
       this.imageSrc = this.service.resolveImageSrc(this.imageUrl); // 時間差でimageファイルのURLを差し替える。
     }
   }
+  
 
   onLoadImage() {
     this.loadImageEvent.next(true); // imageファイルがloadされたことを親コンポーネントに通知する。

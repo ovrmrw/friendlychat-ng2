@@ -33,6 +33,7 @@ export class ChatHeaderComponent implements OnChanges {
       this.cd.markForCheck();
     }
   }
+  
 
   onClickSignIn() { // サインインボタンをクリックした。
     this.service.signIn();
