@@ -36,7 +36,7 @@ export class ChatMainComponent extends ParentComponent implements OnInit, OnDest
 
   ngOnChanges(change) {
     if (this.isAuthed) { // サインインしている。
-      this.service.loadMessages();
+      this.service.loadMessages(); // メッセージをFirebaseから取得して表示する。
     }
   }
 
@@ -55,7 +55,7 @@ export class ChatMainComponent extends ParentComponent implements OnInit, OnDest
       console.log(file);
       if (file.type.match('image.*')) { // imageファイルを選択した。
         this.service.saveImage(file);
-      } else { // imageファイルを選択していない。
+      } else { // imageファイルではないものを選択した。
         this.snackbarText$.next('You can only share images');
       }
     }

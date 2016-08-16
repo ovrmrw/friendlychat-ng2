@@ -110,13 +110,12 @@ export class FirebaseController {
 
 
   setImageUrl(imageUrl: string): Observable<string> {
-    if (!imageUrl.startsWith('gs://')) {
+    if (!imageUrl.startsWith('gs://')) { // 変数imageUrlがFirebase Storageのものではない場合、そのまま返す。
       return Observable.of(imageUrl);
     }
     // If the image is a Firebase Storage URI we fetch the URL.
-    const subject = new BehaviorSubject<string>(imageUrl);
+    const subject = new BehaviorSubject<string>(LOADING_IMAGE_URL); // とりあえずグルグルを表示させる。
 
-    subject.next(LOADING_IMAGE_URL); // とりあえずグルグルを表示させる。
     this.storage.refFromURL(imageUrl).getMetadata().then((metadata) => {
       subject.next(metadata.downloadURLs[0]); // imageファイルの本来のURLを取得したら差し替える。
       subject.complete(); // 適切にcompleteしないとメモリリークの原因になる。
