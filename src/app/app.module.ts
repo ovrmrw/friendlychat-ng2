@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { DeprecatedFormsModule } from '@angular/common';
@@ -21,7 +21,6 @@ import { FirebaseController } from '../firebase/firebase.controller';
   imports: [BrowserModule, FormsModule],
   declarations: [ChatMessageComponent, ChatSnackbarComponent, ChatMainComponent, ChatHeaderComponent, AppComponent],
   providers: [FirebaseController, ChatMessageService, ChatHeaderService, ChatMainService, AppService],
-  bootstrap: [AppComponent],
-  // schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
