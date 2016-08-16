@@ -57,6 +57,7 @@ export class ChatMainComponent extends ParentComponent implements OnInit, OnDest
         this.service.saveImage(file);
       } else { // imageファイルではないものを選択した。
         this.snackbarText$.next('You can only share images');
+        this.resetForm();
       }
     }
   }
