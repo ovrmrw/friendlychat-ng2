@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { FirebaseController } from '../firebase/firebase.controller';
+
+import { FirebaseController } from '../firebase';
 
 
 @Injectable()
