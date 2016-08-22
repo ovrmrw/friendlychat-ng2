@@ -53,13 +53,13 @@ export class FirebaseController {
     // Sign in Firebase using popup auth and Google as the identity provider.
     const provider = new firebase.auth.GoogleAuthProvider();
     this.auth.signInWithPopup(provider);
-  };
+  }
 
 
   signOut() {
     // Sign out of Firebase.
     this.auth.signOut();
-  };
+  }
 
 
   saveMessage(message: string) {
@@ -106,7 +106,7 @@ export class FirebaseController {
         });
       }
     }
-  };
+  }
 
 
   setImageUrl(imageUrl: string): Observable<string> {
@@ -121,7 +121,7 @@ export class FirebaseController {
       subject.complete(); // 適切にcompleteしないとメモリリークの原因になる。
     });
     return subject.asObservable();
-  };
+  }
 
 
   loadMessages() {
@@ -143,7 +143,7 @@ export class FirebaseController {
       this.messagesSubject$.next(this.messages);
       this.informStableSubject$.next(true);
     });
-  };
+  }
 
 
   get currentUser$() { return this.authSubject$.asObservable(); }
