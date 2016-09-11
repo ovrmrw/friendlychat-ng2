@@ -1,7 +1,7 @@
 'use strict';
 
 const webpack = require('webpack');
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -10,13 +10,17 @@ module.exports = {
   },
   output: {
     path: '.dest',
-    filename: 'webpack.bundle.[name].js'
+    filename: 'webpack.bundle.[name].js',
+    chunkFilename: 'chunks.[id].js'
   },
   resolve: {
     extensions: ['', '.ts', '.js']
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor' })
+    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor' }),
+    new HtmlWebpackPlugin({
+      template: './public/index.html'
+    })
   ],
   module: {
     loaders: [
@@ -47,4 +51,9 @@ module.exports = {
     ]
   },
   devtool: 'source-map',
+  externals: { // firebaseはバンドルに含めてuglifyするとエラーの原因となるのでexternalsにする。
+    // require("firebase") is external and available
+    //  on the global var firebase
+    "firebase": "firebase"
+  }
 };
