@@ -17,7 +17,7 @@ Base Project -> [ovrmrw/ovrmrw-ng2-env-20160725](https://github.com/ovrmrw/ovrmr
 |OS|Windows 10 Pro 64bit or 7 Pro 32bit|
 |Editor|VSCode (stable)|
 |node --version|v6.3.1|
-|@angular/core|2.0.0-rc.6|
+|@angular/core|2.0.0|
 
 ### Setup
 ```

@@ -51,9 +51,9 @@ module.exports = {
     ]
   },
   devtool: 'source-map',
-  externals: { // firebaseはバンドルに含めてuglifyするとエラーの原因となるのでexternalsにする。
-    // require("firebase") is external and available
-    //  on the global var firebase
-    "firebase": "firebase"
-  }
+  // externals: { // firebaseはバンドルに含めてuglifyするとエラーの原因となるのでexternalsにする。
+  //   // require("firebase") is external and available
+  //   //  on the global var firebase
+  //   "firebase": "firebase"
+  // }
 };
