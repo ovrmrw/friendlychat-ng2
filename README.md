@@ -6,9 +6,9 @@ This is a re-write of Firebase tutorial app called "Friendly Chat" into Angular2
 
 [Original Firebase Tutorial](https://codelabs.developers.google.com/codelabs/firebase-web)
 
-[Demo on firebase hosting (original ver.)](https://friendlychat-d014b.firebaseapp.com)
+[Demo on Firebase Hosting (original ver.)](https://friendlychat-d014b.firebaseapp.com)
 
-[Demo on firebase hosting (Angular2 ver.)](https://friendlychat-ng2.firebaseapp.com)
+[Demo on Firebase Hosting (Angular ver.)](https://friendlychat-ng2.firebaseapp.com)
 
 Base Project -> [ovrmrw/ovrmrw-ng2-env-20160725](https://github.com/ovrmrw/ovrmrw-ng2-env-20160725)
 
